@@ -1,0 +1,31 @@
+metadata:
+  name: test-systemctl
+  format: "Apertis Test Definition 1.0"
+  image-types:
+    fixedfunction:  [ armhf, arm64, amd64 ]
+  image-deployment:
+    - OSTree
+  group: systemctl
+  type: functional
+  exec-type: automated
+  priority: medium
+  maintainer: "Apertis Project"
+  description: "Test the systemctl."
+
+  expected:
+    - "The output should show pass."
+
+install:
+  git-repos:
+    - url: https://github.com/gboyvalenkov-bosch/Apertis.git
+      branch: main
+
+run:
+  steps:
+    - "# Enter test directory:"
+    - cd test-systemctl
+    - "# Execute the following command:"
+    - lava-test-case test-systemctl --shell ./test-systemctl.sh
+
+parse:
+  pattern: "(?P<test_case_id>.*):\\s+(?P<result>(pass|fail))"
